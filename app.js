@@ -11,6 +11,9 @@ app.get('/',(req,res)=>{
 app.post('/bhfl',(req,res)=>{
     const data=req.body.data;
     console.log(data);
+    if (!Array.isArray(data) || data.length === 0) {
+        return res.status(400).json({ error: 'Invalid or empty array provided in the request' });
+    }
     let alpha=[];
     let nums=[];
     for(var i=0;i<data.length;i++){
@@ -47,6 +50,10 @@ app.post('/bhfl',(req,res)=>{
 app.get('/bhfl',(req,res)=>{
     res.status(200).json({"operation_code":1});
 })
+
+app.use((req, res) => {
+    res.status(404).send("404 URL NOT FOUND");
+});
 
 app.listen(5000, () => {
     console.log("listening on port 5000");
